@@ -1,19 +1,18 @@
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
-from django.views.generic import CreateView, ListView, DetailView, FormView, DeleteView, TemplateView
+from django.views.generic import CreateView, DetailView, DeleteView
 from django.views.generic.edit import UpdateView
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth import update_session_auth_hash
-from django.views.generic.base import View
 from profiles.forms import createProfileForm
 from django.urls import reverse_lazy
 from profiles.models import createProfileModel, accountInfoModel
 from django.contrib import messages, auth
-from django.shortcuts import get_object_or_404
 import random
-from django import forms
+from django.contrib.auth.mixins import LoginRequiredMixin
 
-class CreateProfile(CreateView):
+
+class CreateProfile(LoginRequiredMixin, CreateView):
     form_class = createProfileForm
     success_url = reverse_lazy('accountsettings')
     template_name = "profiles/createprofile.html"
@@ -27,23 +26,25 @@ def success(request):
 
 
 #
-class UpdateprofileView(UpdateView):
+class UpdateprofileView(LoginRequiredMixin, UpdateView):
     # form_class = updateProfileForm
     model = createProfileModel
-    fields = ["age","sex","marital_status","date_of_birth","phone_number","alternate_phone_number","address","city","state","pin_code"]
+    fields = ["age", "sex", "marital_status", "date_of_birth", "phone_number", "alternate_phone_number", "address",
+              "city", "state", "pin_code"]
     # form_class = createProfileForm
     success_url = reverse_lazy('welcomeuser')
     template_name = "profiles/updateprofile.html"
 
 
-class ViewprofileView(DetailView):
+class ViewprofileView(LoginRequiredMixin, DetailView):
     model = createProfileModel
     fields = "__all__"
     # form_class = createProfileForm
     success_url = reverse_lazy('welcomeuser')
     template_name = "profiles/viewprofile.html"
 
-def ViewaccountView(request,pk):
+
+def ViewaccountView(request, pk):
     st = accountInfoModel.objects.get(id=pk)
     return render(request, 'profiles/viewaccount.html', {'st': st})
 
@@ -53,7 +54,7 @@ def ViewProfile(request, pk):
     return render(request, 'profiles/viewprofile.html', {'st': st})
 
 
-class Deleteprofile(DeleteView):
+class Deleteprofile(LoginRequiredMixin, DeleteView):
     model = User
     fields = "__all__"
     success_url = reverse_lazy('myhome')
@@ -100,8 +101,8 @@ def generateaccno(request):
         # if no details exist (new user), create new details
         uid1 = None
         curr_user = accountInfoModel()
-        curr_user.account_number = genaccno()       # random account number for every new user
-        curr_user.mpin = genpin()                   # random pin for every new user
+        curr_user.account_number = genaccno()  # random account number for every new user
+        curr_user.mpin = genpin()  # random pin for every new user
         curr_user.balance = 1000
         curr_user.acctype = "Savings"
         curr_user.username = request.user

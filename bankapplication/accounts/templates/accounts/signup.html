@@ -2,17 +2,17 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Sign Up</title>
+    <title>Create Account</title>
 </head>
 <body>
-  <h2>Sign up Page</h2>
+  <h2>Create Account</h2>
   <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit">Sign Up</button>
+    <button type="submit">Create</button>
   </form>
  <br><br>
-<a href="http://127.0.0.1:8000/"><button class="btn btn-primary" style="font-size:12px;height:30px;width:150px">HOME</button></a>
+<a href="{% url 'myhome' %}"><button class="btn btn-primary" style="font-size:12px;height:30px;width:150px">Home</button></a>
 
 </body>
 </html>

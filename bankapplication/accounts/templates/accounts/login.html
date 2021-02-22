@@ -8,7 +8,7 @@
     <div class="container">
         <form class="form-control" action="/accounts/login/" method="post">
             {% csrf_token %}
-            <h2>Enter login details</h2>
+            <h2>Login</h2>
 
             {{ form.as_p }}
 
@@ -24,6 +24,7 @@
              <a href="{% url 'password_reset' %}" class="col text-left"><button class="btn btn-primary" style="font-size:12px;height:30px;width:150px">Forgot password?</button></a>
              <a href="{% url 'signup' %}"><button class="btn btn-primary" style="font-size:12px;height:30px;width:150px">Create New Account</button></a>
          </small>
+    <a href="{% url 'myhome' %}"><button class="btn btn-primary" style="font-size:12px;height:30px;width:150px">Home</button></a>
     </div>
 </body>
 </html>
