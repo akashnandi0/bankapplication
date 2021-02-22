@@ -2,20 +2,19 @@ from django.shortcuts import render, redirect
 from profiles.models import accountInfoModel, createProfileModel
 from django.contrib import messages
 # Create your views here.
-from transactions.forms import TransferAmountForm, DepositWithdrawAmountForm, BalanceCheckForm
+from transactions.forms import TransferAmountForm, DepositAmountForm, WithdrawAmountForm, BalanceCheckForm
 
 
 def transferamount(request):
     form = TransferAmountForm()
     context = {}
     context["form"] = form
-    if request.method == "GET":
+    if request.method == "POST":
         form = TransferAmountForm(request.POST)
         if form.is_valid():
-
-            account_number = form.cleaned_data.get("account_number")
-            amount = form.cleaned_data.get("amount")
             mpin = form.cleaned_data.get("mpin")
+            amount = form.cleaned_data.get("amount")
+            account_number = form.cleaned_data.get("account_number")
             try:
                 object = accountInfoModel.objects.get(mpin=mpin)
                 object1 = accountInfoModel.objects.get(account_number=account_number)
@@ -41,11 +40,11 @@ def transferamount(request):
 
 
 def depositamount(request):
-    form = DepositWithdrawAmountForm()
+    form = DepositAmountForm()
     context = {}
     context["form"] = form
     if request.method == "POST":
-        form = DepositWithdrawAmountForm(request.POST)
+        form = DepositAmountForm(request.POST)
         if form.is_valid():
             mpin = form.cleaned_data.get("mpin")
             amount = form.cleaned_data.get("amount")
@@ -72,11 +71,11 @@ def depositamount(request):
 
 
 def withdrawamount(request):
-    form = DepositWithdrawAmountForm()
+    form = WithdrawAmountForm()
     context = {}
     context["form"] = form
     if request.method == "POST":
-        form = DepositWithdrawAmountForm(request.POST)
+        form = WithdrawAmountForm(request.POST)
         if form.is_valid():
             mpin = form.cleaned_data.get("mpin")
             amount = form.cleaned_data.get("amount")

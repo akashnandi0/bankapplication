@@ -40,7 +40,7 @@ class TransferAmountForm(ModelForm):
             msg = "you have provided invalid account number"
             self.add_error("account_number", msg)
 
-class DepositWithdrawAmountForm(ModelForm):
+class WithdrawAmountForm(ModelForm):
     class Meta:
         model = Transferdetails
         fields = ["amount","mpin"]
@@ -64,9 +64,39 @@ class DepositWithdrawAmountForm(ModelForm):
                     msg = "insufficent amount"
                     self.add_error("amount", msg)
                 pass
+
         except:
             msg = "you have provided invalid mpin"
             self.add_error("mpin", msg)
+
+
+class DepositAmountForm(ModelForm):
+    class Meta:
+        model = Transferdetails
+        fields = ["amount", "mpin"]
+        labels = {
+            "amount": "Enter Amount: ",
+            "mpin": "Enter Unique Pin(mpin): "
+        }
+
+    def clean(self):
+        cleaned_data = super().clean()
+        mpin = cleaned_data.get("mpin")
+        account_number = cleaned_data.get("account_number")
+        amount = cleaned_data.get("amount")
+        print(mpin, ",", amount)
+        try:
+            object = accountInfoModel.objects.get(mpin=mpin)
+            if (object):
+
+                # for checking sufficent balance
+                if (object.balance < amount):
+                    pass
+
+        except:
+            msg = "you have provided invalid mpin"
+            self.add_error("mpin", msg)
+
 
 class BalanceCheckForm(ModelForm):
     class Meta:
