@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Account Settings</title>
+</head>
+<body>
+{% if user.is_authenticated %}
+<h1>SETUP YOUR ACCOUNT</h1>
+<a href="{% url 'generateaccno' %}"><button class="btn btn-primary" style="font-size:12px;height:30px;width:200px">Generate Account Number & PIN</button></a>
+{% else %}
+YOU ARE NOT LOGGED IN
+<br>
+<a href="{% url 'login' %}"><button class="btn btn-primary" style="font-size:12px;height:30px;width:150px">Login</button></a>
+
+
+{% endif %}
+
+</body>
+</html>

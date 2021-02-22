@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>WELCOME USER</title>
+</head>
+<body>
+{% if user.is_authenticated %}
+<h1>WELCOME TO CRYPTO BANK</h1>
+
+<h2>Welcome, <span id="prof_name">{{ request.user.first_name }} {{ request.user.last_name }}</span> </h2>
+<h4 style="font-weight: 300;">It's good to have you here.</h4>
+<!--<a href="http://127.0.0.1:8000/profiles/createprofile/"><button class="btn btn-primary" style="font-size:12px;height:30px;width:150px">Create Profile</button></a>-->
+<!--user id:{{uid}}-->
+
+{% if uid is None %}
+<font color="green"><h6 style="font-weight:bold; display: block;
+  font-size: 15px;font-color:red;">Note: Mandotory to create profile</h6></font>
+<a href="{% url 'createprofile' %}"><button class="btn btn-primary" style="font-size:12px;height:30px;width:150px">Create Profile</button></a>
+{% else %}
+<a href="{%url 'updateprofile' uid%}"><button class="btn btn-primary" style="font-size:12px;height:30px;width:150px">Update Profile</button></a>
+<a href="{%url 'viewprofile' uid%}"><button class="btn btn-primary" style="font-size:12px;height:30px;width:150px">Profile Details</button></a>
+<a href="{%url 'viewaccount' uid%}"><button class="btn btn-primary" style="font-size:12px;height:30px;width:150px">Account Details</button></a>
+<a href="{% url 'transactions' %}"><button class="btn btn-primary" style="font-size:12px;height:30px;width:150px">Transactions</button></a>
+
+{% endif %}
+<a href="{% url 'logout' %}"><button class="btn btn-primary" style="font-size:12px;height:30px;width:150px">Log Out</button></a>
+<a href="{% url 'change_password' %}"><button class="btn btn-primary" style="font-size:12px;height:30px;width:150px">Change Password</button></a>
+
+<font color="red"><h6 style="font-weight:bold; display: block;
+  font-size: 15px;font-color:red;">Note: Once account is deleted you wont be able to access it</h6></font>
+
+
+<a href="{% url 'deleteaccount' uid%}"><button class="btn btn-primary" style="font-size:12px;height:30px;width:150px">Close Account</button></a>
+<!--<a href="http://127.0.0.1:8000/"><button class="btn btn-primary" style="font-size:12px;height:30px;width:150px">Log Out</button></a>-->
+
+<!--<a href="{% url 'signup' %}"><button class="btn btn-primary" style="font-size:12px;height:30px;width:150px">Create New Account</button></a>-->
+
+{% else %}
+YOU ARE NOT LOGGED IN
+<br>
+<a href="{% url 'login' %}"><button class="btn btn-primary" style="font-size:12px;height:30px;width:150px">Login</button></a>
+
+
+{% endif %}
+
+</body>
+</html>

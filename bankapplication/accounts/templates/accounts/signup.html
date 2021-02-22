@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sign Up</title>
+</head>
+<body>
+  <h2>Sign up Page</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Sign Up</button>
+  </form>
+ <br><br>
+<a href="http://127.0.0.1:8000/"><button class="btn btn-primary" style="font-size:12px;height:30px;width:150px">HOME</button></a>
+
+</body>
+</html>
